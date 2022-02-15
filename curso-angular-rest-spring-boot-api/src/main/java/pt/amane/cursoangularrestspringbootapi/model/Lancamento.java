@@ -1,4 +1,4 @@
-package pt.amane.cursoangularrestspringbootapi.entities;
+package pt.amane.cursoangularrestspringbootapi.model;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

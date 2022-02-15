@@ -16,7 +16,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.util.ObjectUtils;
 
-import pt.amane.cursoangularrestspringbootapi.entities.Lancamento;
+import pt.amane.cursoangularrestspringbootapi.model.Categoria_;
+import pt.amane.cursoangularrestspringbootapi.model.Lancamento;
+import pt.amane.cursoangularrestspringbootapi.model.Lancamento_;
+import pt.amane.cursoangularrestspringbootapi.model.Pessoa_;
 import pt.amane.cursoangularrestspringbootapi.repositories.filters.LancamentoFilter;
 import pt.amane.cursoangularrestspringbootapi.repositories.projections.ResumoLancamento;
 
@@ -32,6 +35,7 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 		CriteriaQuery<Lancamento> criteria = builder.createQuery(Lancamento.class);
 		Root<Lancamento> root = criteria.from(Lancamento.class);
 		
+		// Criar as restrições com array de predicate
 		Predicate[] predicates = criarRestricoes(lancamentoFilter, builder, root);
 		criteria.where(predicates);
 		
@@ -41,10 +45,16 @@ public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 		return new PageImpl<>(query.getResultList(), pageable, total(lancamentoFilter));
 	}
 
+	// criar a lista de pradicate...
 	private Predicate[] criarRestricoes(LancamentoFilter lancamentoFilter, CriteriaBuilder builder,
 			Root<Lancamento> root) {
 		List<Predicate> predicates = new ArrayList<>();
-				
+		
+		/**
+		 * where descricao like '%informaçao que deseja filtrar%'
+		 * o uso de metamodel que gera uma classes e regera as classes para evitar o erro.
+		 */
+		
 		if(!ObjectUtils.isEmpty(lancamentoFilter.getDescricao())) {
 			predicates.add(builder.like(
 					builder.lower(root.get(Lancamento_.descricao)), "%" + lancamentoFilter.getDescricao().toLowerCase() + "%"));

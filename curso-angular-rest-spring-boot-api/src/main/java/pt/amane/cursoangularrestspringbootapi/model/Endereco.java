@@ -1,4 +1,4 @@
-package pt.amane.cursoangularrestspringbootapi.entities;
+package pt.amane.cursoangularrestspringbootapi.model;
 
 import javax.persistence.Embeddable;
 

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-import pt.amane.cursoangularrestspringbootapi.entities.Pessoa;
+import pt.amane.cursoangularrestspringbootapi.model.Pessoa;
 import pt.amane.cursoangularrestspringbootapi.repositories.PessoaRepository;
 
 @Service

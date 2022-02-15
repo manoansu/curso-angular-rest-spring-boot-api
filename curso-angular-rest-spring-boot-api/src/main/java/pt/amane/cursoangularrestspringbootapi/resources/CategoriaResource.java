@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import pt.amane.cursoangularrestspringbootapi.entities.Categoria;
 import pt.amane.cursoangularrestspringbootapi.events.RecursoCriadoEvent;
+import pt.amane.cursoangularrestspringbootapi.model.Categoria;
 import pt.amane.cursoangularrestspringbootapi.repositories.CategoriaRepository;
 
 @RestController
