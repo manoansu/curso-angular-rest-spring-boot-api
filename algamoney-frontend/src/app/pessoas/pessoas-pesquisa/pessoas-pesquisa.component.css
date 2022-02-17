@@ -1,0 +1,40 @@
+.pessoa{
+    margin-bottom: 10px;
+}
+
+.nome{
+    margin-bottom: 10px;
+}
+
+.pesquisa{
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.col-valor-header {
+    width: 120px;
+  }
+  
+  .col-valor-content {
+    text-align: right;
+  }
+  
+  .col-data-header {
+    width: 120px;
+  }
+  
+  .col-data-content {
+    text-align: center;
+  }
+
+  .newButton{
+      margin-top: 10px;
+  }
+
+  .status a{
+    text-decoration: none;
+    color: #495057;;
+  }
+  .status a:hover{
+    color: #fff;
+  }
