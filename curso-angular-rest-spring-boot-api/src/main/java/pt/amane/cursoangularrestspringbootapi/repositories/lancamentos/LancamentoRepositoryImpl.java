@@ -24,7 +24,6 @@ import pt.amane.cursoangularrestspringbootapi.repositories.filters.LancamentoFil
 import pt.amane.cursoangularrestspringbootapi.repositories.projections.ResumoLancamento;
 
 
-
 public class LancamentoRepositoryImpl implements LancamentoRepositoryQuery {
 
 	@PersistenceContext

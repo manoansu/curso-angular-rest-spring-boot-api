@@ -1,23 +1,29 @@
 <div class="container">
     <div class="p-grid">
+      <form autocomplete="off" (ngsubmit)="pesquisar()">
+        <div class="p-col-12 pessoa">
+          <h1>Pessoas</h1>
+        </div>
+    
+        <div class="p-col-12 p-fluid nome">
+          <label>Nome</label>
+          <input pInputText type="text" name="nome" [(ngModel)]="filtro.nome">
+        </div>
+    
+        <div class="p-col-12 pesquisa">
+          <button pButton type="submit" label="Pesquisar"></button>
+        </div>
+    </form>
   
-      <div class="p-col-12 pessoa">
-        <h1>Pessoas</h1>
-      </div>
-  
-      <div class="p-col-12 p-fluid nome">
-        <label>Nome</label>
-        <input pInputText type="text">
-      </div>
-  
-      <div class="p-col-12 pesquisa">
-        <button pButton type="submit" label="Pesquisar"></button>
-      </div>
+      
   
       <div class="p-grid">
         <div class="p-col-12">
-          <p-table [value]="pessoas" [paginator]="true" [rows]="2" [responsive]="true">
-            <ng-template pTemplate="header">
+         <p-table [value]="pessoas" [responsive]="true"
+          [paginator]="true" [rows]="filtro.itensPorPagina"
+          [lazy]="true" [totalRecords]="totalRegistros"
+          (onLazyLoad)="aoMudarPagina($event)" #tabela>
+          <ng-template pTemplate="header">
               <tr>
                 <th>Nome</th>
                 <th>Cidade</th>
@@ -29,17 +35,26 @@
             <ng-template pTemplate="body" let-pessoa>
               <tr>
                 <td>{{ pessoa.nome }}</td>
-                <td>{{ pessoa.cidade }}</td>
-                <td class="col-data-content">{{ pessoa.estado }}</td>
+                <td>{{ pessoa.endereco.cidade }}</td>
+                <td class="col-data-content">{{ pessoa.endereco.estado }}</td>
                 <td class="status">
                     <a href="javascript:;" [pTooltip]="pessoa.ativo ? 'Desativar' : 'Ativar'"
-                    tooltipPosition="top">
+                    tooltipPosition="top" (click)="alternarStatus(pessoa)">
                         {{ pessoa.ativo ? 'Ativo' : 'Inativo' }}
                     </a>
                 </td>
                 <td class="col-acoes">
                   <a pButton icon="pi pi-pencil" pTooltip="Editar" tooltipPosition="top"></a>
-                  <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"></button>
+                  <button pButton icon="pi pi-trash" pTooltip="Excluir" tooltipPosition="top"
+                  (click)="confirmarExclusao(pessoa)"></button>
+                </td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="5">
+                  Nenhuma pessoa encontrada
                 </td>
               </tr>
             </ng-template>
@@ -49,7 +64,7 @@
       </div>
   
       <div class="p-col-12 newButton">
-        <a pButton label="Nova Pessoa"></a>
+        <a pButton label="Nova Pessoa" routerLink="/pessoas/novo"></a>
       </div>
     </div>
   </div>

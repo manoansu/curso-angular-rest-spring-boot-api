@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PessoasPesquisaComponent } from './pessoas-pesquisa/pessoas-pesquisa.component';
 import { PessoasCadastradoComponent } from './pessoas-cadastrado/pessoas-cadastrado.component';
-import { PessoaGridComponent } from './pessoa-grid/pessoa-grid.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { TableModule } from 'primeng/table';
@@ -15,17 +14,16 @@ import { CalendarModule } from 'primeng/calendar';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { InputMaskModule } from 'primeng/inputmask';
 import { SharedModule } from './../shared/shared.module';
-
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
   declarations: [
     PessoasCadastradoComponent,
-    PessoaGridComponent,
     PessoasPesquisaComponent
   ],
   imports: [
-  CommonModule,
+    CommonModule,
     InputTextModule,
     InputNumberModule, 
     InputMaskModule,
@@ -37,11 +35,9 @@ import { SharedModule } from './../shared/shared.module';
     InputTextareaModule,
     CalendarModule,
     SelectButtonModule,
-    SharedModule
+    SharedModule,
+    RouterModule
   ],
-  exports:[
-    PessoasCadastradoComponent,
-    PessoasPesquisaComponent
-  ]
+  exports:[]
 })
 export class PessoasModule { }

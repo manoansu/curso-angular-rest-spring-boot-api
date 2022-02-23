@@ -36,6 +36,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/categorias").permitAll()
                 .anyRequest().authenticated()
             .and()
+            	//Desbilata a sessao..
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
                 .csrf().disable()
