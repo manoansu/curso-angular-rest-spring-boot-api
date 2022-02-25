@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, NgForm } from '@angular/forms';
 import { PessoaService } from 'src/app/pessoas/pessoa.service';
 import { CategoriaService } from './../../categorias/categoria.service';
-import { ErrorHendlerService } from './../../core/error-hendler.service';
+
 import { Lancamento } from './../../core/model';
 import { MessageService } from 'primeng/api';
 import { LancamentoService } from '../lancamento.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-lancamentos-cadastro',
@@ -31,7 +32,7 @@ lancamento = new Lancamento();
     private pessoaService: PessoaService,
     private messageService: MessageService,
     private lancamentoService: LancamentoService,
-    private errorHandler: ErrorHendlerService,
+    private errorHandler: ErrorHandlerService,
     private activedroute: ActivatedRoute,
     private router: Router,
     private title: Title

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ErrorHendlerService } from './error-hendler.service';
+import { LogoutService } from './logout.service';
 
-describe('ErrorHendlerService', () => {
-  let service: ErrorHendlerService;
+describe('LogoutService', () => {
+  let service: LogoutService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ErrorHendlerService);
+    service = TestBed.inject(LogoutService);
   });
 
   it('should be created', () => {

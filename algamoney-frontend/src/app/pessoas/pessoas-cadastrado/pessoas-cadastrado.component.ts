@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { PessoaService } from 'src/app/pessoas/pessoa.service';
 import { MessageService } from 'primeng/api';
 import { Pessoa } from './../../core/model';
-import { ErrorHendlerService } from './../../core/error-hendler.service';
+
 import { NgForm } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
 
 @Component({
   selector: 'app-pessoas-cadastrado',
@@ -18,7 +19,7 @@ export class PessoasCadastradoComponent implements OnInit {
   constructor(
     private pessoaService: PessoaService,
     private messageService: MessageService,
-    private errorHandler: ErrorHendlerService,
+    private errorHandler: ErrorHandlerService,
     private title: Title
   ) { }
 

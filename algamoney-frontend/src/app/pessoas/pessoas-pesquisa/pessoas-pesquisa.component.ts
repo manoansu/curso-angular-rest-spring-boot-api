@@ -1,35 +1,32 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PessoaFiltro, PessoaService } from './../pessoa.service';
-import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ErrorHendlerService } from './../../core/error-hendler.service';
 import { Title } from '@angular/platform-browser';
+import { LazyLoadEvent, MessageService, ConfirmationService } from 'primeng/api';
+import { ErrorHandlerService } from 'src/app/core/error-handler.service';
+import { PessoaService, PessoaFiltro } from '../pessoa.service'
+
 
 @Component({
   selector: 'app-pessoas-pesquisa',
   templateUrl: './pessoas-pesquisa.component.html',
   styleUrls: ['./pessoas-pesquisa.component.css']
 })
-export class PessoasPesquisaComponent implements OnInit{
-
+export class PessoasPesquisaComponent implements OnInit {
   totalRegistros = 0;
   filtro = new PessoaFiltro()
   pessoas: any[] = [];
-
-  @ViewChild('tabela') grid!:any
+  @ViewChild('tabela') grid!: any;
 
   constructor(
     private pessoaService: PessoaService,
     private messageService: MessageService,
+    private errorHandler: ErrorHandlerService,
     private confirmationService: ConfirmationService,
-    private errorHendlerService: ErrorHendlerService,
     private title: Title
-    ) { }
+  ) { }
 
-    ngOnInit(): void {
-        this.title.setTitle('Pesquisa de pessoas');
-    }
+  ngOnInit() {
+    this.title.setTitle('Pesquisa de pessoas');
+  }
 
   pesquisar(pagina: number = 0): void {        
     this.filtro.pagina = pagina;
@@ -55,29 +52,30 @@ export class PessoasPesquisaComponent implements OnInit{
     });
   }
 
-  excluir(lancamento: any) {
-    this.pessoaService.excluir(lancamento.codigo)
-      .then(() => {
-        if (this.grid.first === 0) {
-          this.pesquisar();
-        } else {
-          this.grid.reset();
-        }
+  excluir(pessoa: any) {
 
-        this.messageService.add({ severity: 'success', detail: 'Pessoa excluído com sucesso!' })
-      }).catch(error => this.errorHendlerService.handle(error));
+    this.pessoaService.excluir(pessoa.codigo)
+      .then(
+        () => {
+          this.grid.reset();
+
+          this.messageService.add({ severity: 'success', detail: 'Pessoa excluída com sucesso!' })
+        }
+      )
+      .catch((error) => this.errorHandler.handle(error))
+      
   }
 
-  alternarStatus(pessoa:any){
+  alternarStatus(pessoa: any): void {
     const novoStatus = !pessoa.ativo;
 
-    this.pessoaService.mudadarStatus(pessoa.codigo, novoStatus)
-      .then(() =>{
-        const accao = novoStatus ? 'ativado' : 'desativada';
+    this.pessoaService.mudarStatus(pessoa.codigo, novoStatus)
+      .then(() => {
+        const acao = novoStatus ? 'ativada' : 'desativada';
 
         pessoa.ativo = novoStatus;
-        this.messageService.add({ severity: 'success', detail: `Pessoa ${accao} com sucesso!` })
-      }).catch(error => this.errorHendlerService.handle(error));
-      
+        this.messageService.add({ severity: 'success', detail: `Pessoa ${acao} com sucesso!` });
+      })
+      .catch(erro => this.errorHandler.handle(erro));
   }
 }

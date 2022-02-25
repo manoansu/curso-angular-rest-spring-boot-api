@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Pessoa } from './../core/model';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Pessoa } from '../core/model';
+import { environment } from 'src/environments/environment';
 
 export class PessoaFiltro {
   nome?: string;
@@ -11,15 +12,21 @@ export class PessoaFiltro {
 @Injectable({
   providedIn: 'root'
 })
-export class PessoaService {
-  pessoasUrl = 'http://localhost:8080/pessoas';
 
-  constructor(private http: HttpClient)  { }
+export class PessoaService {
+  
+  pessoasUrl!:string;
+
+  constructor(
+    private http: HttpClient
+    )  {
+      this.pessoasUrl = `${environment.apiUrl}/pessoas`
+   }
 
   pesquisar(filtro: PessoaFiltro) : Promise<any> {
 
     const headers = new HttpHeaders()
-      .append('Authorization', 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbkBhbGdhbW9uZXkuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5vbWUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNjQ1NTQyOTcyLCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiIzMWU3MDAyYS02MWYyLTRlZmQtOGRlMC0wZDI0N2E0YzkwMzgiLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.1TvKU4SSN8ljd-fMV5bgYfR0073AYf2uag-KxpAoaDs');
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
       
     let params = new HttpParams()
                       .set('page', filtro.pagina)
@@ -43,38 +50,56 @@ export class PessoaService {
       });
   }
 
-  listarTodas(): Promise<any> {
+  listarTodas() : Promise<any> {
     const headers = new HttpHeaders()
-      .append('Authorization', 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbkBhbGdhbW9uZXkuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5vbWUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNjQ1NTQyOTcyLCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiIzMWU3MDAyYS02MWYyLTRlZmQtOGRlMC0wZDI0N2E0YzkwMzgiLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.1TvKU4SSN8ljd-fMV5bgYfR0073AYf2uag-KxpAoaDs');
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
     return this.http.get(this.pessoasUrl, { headers })
       .toPromise()
       .then((response: any) => response['content']);
   }
 
-  excluir(codigo:number): Promise<void> {
+  excluir(codigo: number) : Promise<void> {    
     const headers = new HttpHeaders()
-      .append('Authorization', 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbkBhbGdhbW9uZXkuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5vbWUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNjQ1NTQyOTcyLCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiIzMWU3MDAyYS02MWYyLTRlZmQtOGRlMC0wZDI0N2E0YzkwMzgiLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.1TvKU4SSN8ljd-fMV5bgYfR0073AYf2uag-KxpAoaDs');
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
 
-      return this.http.delete<void>(`${this.pessoasUrl}/${codigo}`, { headers })
-        .toPromise()
+    return this.http.delete<void>(`${this.pessoasUrl}/${codigo}`, { headers }).toPromise();
   }
 
-  mudadarStatus(codigo:number, ativo: boolean): Promise<void> {
+  mudarStatus(codigo: number, ativo: boolean): Promise<void> {
     const headers = new HttpHeaders()
-      .append('Authorization', 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbkBhbGdhbW9uZXkuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5vbWUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNjQ1NTQyOTcyLCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiIzMWU3MDAyYS02MWYyLTRlZmQtOGRlMC0wZDI0N2E0YzkwMzgiLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.1TvKU4SSN8ljd-fMV5bgYfR0073AYf2uag-KxpAoaDs')
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
       .append('Content-Type', 'application/json');
 
-      return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, ativo, { headers })
-        .toPromise();
+    return this.http.put<void>(`${this.pessoasUrl}/${codigo}/ativo`, ativo, { headers })
+      .toPromise();
   }
 
   adicionar(pessoa: Pessoa): Promise<Pessoa> {
     const headers = new HttpHeaders()
-    .append('Authorization', 'bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX25hbWUiOiJhZG1pbkBhbGdhbW9uZXkuY29tIiwic2NvcGUiOlsicmVhZCIsIndyaXRlIl0sIm5vbWUiOiJBZG1pbmlzdHJhZG9yIiwiZXhwIjoxNjQ1NTQyOTcyLCJhdXRob3JpdGllcyI6WyJST0xFX0NBREFTVFJBUl9DQVRFR09SSUEiLCJST0xFX1BFU1FVSVNBUl9QRVNTT0EiLCJST0xFX1JFTU9WRVJfUEVTU09BIiwiUk9MRV9DQURBU1RSQVJfTEFOQ0FNRU5UTyIsIlJPTEVfUEVTUVVJU0FSX0xBTkNBTUVOVE8iLCJST0xFX1JFTU9WRVJfTEFOQ0FNRU5UTyIsIlJPTEVfQ0FEQVNUUkFSX1BFU1NPQSIsIlJPTEVfUEVTUVVJU0FSX0NBVEVHT1JJQSJdLCJqdGkiOiIzMWU3MDAyYS02MWYyLTRlZmQtOGRlMC0wZDI0N2E0YzkwMzgiLCJjbGllbnRfaWQiOiJhbmd1bGFyIn0.1TvKU4SSN8ljd-fMV5bgYfR0073AYf2uag-KxpAoaDs')
-    .append('Content-Type', 'application/json');
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
 
     return this.http.post<Pessoa>(this.pessoasUrl, pessoa, { headers })
+      .toPromise()
+      .then();
+  }
+
+  atualizar(pessoa: Pessoa): Promise<Pessoa> {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==')
+      .append('Content-Type', 'application/json');
+
+    return this.http.put<Pessoa>(`${this.pessoasUrl}/${pessoa.codigo}`, pessoa, { headers })
+      .toPromise()
+      .then();
+  }
+
+  buscarPorCodigo(codigo: number): Promise<Pessoa> {
+    const headers = new HttpHeaders()
+      .append('Authorization', 'Basic YWRtaW5AYWxnYW1vbmV5LmNvbTphZG1pbg==');
+
+    return this.http.get<Pessoa>(`${this.pessoasUrl}/${codigo}`, { headers })
       .toPromise()
       .then();
   }

@@ -1,46 +1,65 @@
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule, DatePipe, registerLocaleData } from '@angular/common';
-import { NavbarComponent } from './navbar/navbar.component';
-import { ErrorHendlerService } from './error-hendler.service';
-import { MessageService, ConfirmationService } from 'primeng/api';
-import { TranslateService } from '@ngx-translate/core';
-import { ToastModule } from 'primeng/toast';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { Title } from '@angular/platform-browser';
-
-
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { TranslateModule, TranslateLoader, TranslateService } from '@ngx-translate/core';
 import localePt from '@angular/common/locales/pt';
-import { LancamentoService } from '../lancamentos/lancamento.service';
+
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+
+import { AuthService } from './../seguranca/auth.service';
+import { NavbarComponent } from './navbar/navbar.component';
+import { NaoAutorizadoComponent } from './nao-autorizado.component';
 import { PaginaNaoEncontradoComponent } from './pagina-nao-encontrado.component';
+import { ErrorHandlerService } from './error-handler.service';
 
 registerLocaleData(localePt, 'pt-BR');
+
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
     NavbarComponent,
-    PaginaNaoEncontradoComponent
+    PaginaNaoEncontradoComponent,
+    NaoAutorizadoComponent
   ],
-  imports: [  
+  imports: [
     CommonModule,
+    RouterModule,
+        
     ToastModule,
     ConfirmDialogModule,
-    RouterModule
+
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
   exports: [
     NavbarComponent,
+
+    ToastModule,
     ConfirmDialogModule,
-    ToastModule
   ],
   providers: [
     DatePipe,
-    LancamentoService,
+    ErrorHandlerService,
+    
     MessageService,
     ConfirmationService,
     TranslateService,
-    ErrorHendlerService,
-    Title,
-    {provide: LOCALE_ID, useValue: 'pt-BR' }
+    AuthService,
+
+    Title
   ]
 })
 export class CoreModule { }

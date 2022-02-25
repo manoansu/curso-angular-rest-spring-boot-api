@@ -1,0 +1,30 @@
+<div class="container" style="max-width: 400px; margin: auto">
+
+    <form autocomplete="on" #loginForm="ngForm">
+      <div class="p-grid">
+
+        {{ auth.jwtPayload | json }}
+  
+        <div class="p-col-12 p-fluid">
+          <h1>Login</h1>
+        </div>
+  
+        <div class="p-col-12 p-fluid">
+          <input pInputText type="email" name="usuario" placeholder="E-mail"
+            ngModel required #usuario>
+        </div>
+  
+        <div class="p-col-12 p-fluid senha">
+          <input pInputText type="password" name="senha" placeholder="Senha"
+            ngModel required #senha>
+        </div>
+  
+        <div class="p-col-12 login">
+          <button pButton type="submit" label="Login" [disabled]="loginForm.invalid"
+            (click)="login(usuario.value, senha.value); senha.value=''"></button>
+        </div>
+  
+      </div>
+    </form>
+  
+  </div>
